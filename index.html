@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Veille Techno: Les tests E2E</title>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/reveal.js/3.0.0/css/reveal.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/reveal.js/3.0.0/css/theme/white.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/reveal.js/3.0.0/lib/css/zenburn.css">
+    <link rel="stylesheet" href="own.css">
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <section class="splash">
+                <div class="content">
+                    <img data-src="react-javascript-library-building-user-interfaces.png">
+                </div>
+                <p><small>24 mars 2016 - by <strong>Galilée</strong></small></p>
+            </section>
+
+            <section>
+                <h3 class="title">Sommaire</h3>
+                <div class="content">
+                    <ol>
+                        <li class="main">Présentation</li>
+                        <li class="main">React Component</li>
+                        <li class="main">Environnement&nbsp;de&nbsp;dev.</li>
+                        <li class="main">Architecture Flux</li>
+                    </ol>
+                </div>
+            </section>
+
+            <section>
+                <section>
+                    <h3 class="title">1 - Présentation</h3>
+                    <div class="content">
+                        <ul>
+                            <li class="main">Librairie pour l'UI seulement</li>
+                            <li class="main">Gère les changements d'état du DOM</li>
+                            <li class="main">Virtualisation du DOM</li>
+                            <li class="main">SEO : rendu html côté serveur (nodejs / php)</li>
+                            <li class="main">React Native : Learn One Write everywhere</li>
+                        </ul>
+                        <p><a href="https://github.com/facebook/react/wiki/Sites-Using-React">https://github.com/facebook/react/wiki/Sites-Using-React</a>
+                    </div>
+                </section>
+            </section>
+
+            <section>
+                <section>
+                    <h3 class="title">2 - React component (1/5)</h3>
+                    <div class="content">
+                        <ul>
+                            <li class="main">State, Props et render()</li>
+                            <li class="main">Cycle de vie</li>
+                            <li class="main">Form</li>
+                            <li class="main">JSX</li>
+                        </ul>
+                        <p>
+                            <a target="_blank" href="https://facebook.github.io/react/docs/component-specs.html">https://facebook.github.io/react/docs/component-specs.html</a>
+                        </p>
+                    </div>
+                </section>
+                <section>
+
+                    <h3 class="title">2 - React component  (2/5)</h3>
+                    <h4 class="title">State, Props et render()</h4>
+                    <div class="content">
+                        <ul>
+                            <li class="main"><strong>State</strong>: Interne au composant. Modifié via setState(newState)</li>
+                            <li class="main"><strong>Props</strong> : Défini par le parent. Immutable.</li>
+                            <li class="main"><strong>render()</strong> : Fonction <a target="_blank"  href="https://fr.wikipedia.org/wiki/Fonction_pure">pure</a></li>
+                            <li class="main"><strong>getInitialState()</strong> : Appelé une fois avant que le composant soit "monté"</li>
+                            <li class="main"><strong>getDefaultProps()</strong> : Idem getInitialState. La valeur est partagé entre toutes les instances</li>
+                            <li class="main"><strong><a target="_blank"  href="https://facebook.github.io/react/docs/reusable-components.html">propTypes</a></strong> : valide les Props passés au composant</li>
+                        </ul>
+                    </div>
+
+                </section>
+
+                <section>
+                    <h3 class="title">2 - React component  (3/5)</h3>
+                    <h4>Cycle de vie</h4>
+                    <div class="content">
+                        <ul>
+                            <li class="main">componentWillMount</li>
+                            <li class="main">componentDidMount</li>
+                            <li class="main">componentWillReceiveProps</li>
+                            <li class="main">shouldComponentUpdate</li>
+                            <li class="main">componentWillUpdate</li>
+                            <li class="main">componentDidUpdate</li>
+                            <li class="main">componentWillUnmount</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section>
+                    <h3 class="title">2 - React component (4/5)</h3>
+                    <h4>Form</h4>
+                    <div class="content">
+                        <ul>
+
+                            <li class="main">Textarea : le texte est passé par l'attribut value et non en tant qu'enfant du tag</li>
+                            <li class="main">Ecouter les changement avec onChange (checkbox, input, select)</li>
+                            <li class="main">input "controllé : attribute "value" non modifiable directement par l'utilisateur. Passer par onChange</li>
+                            <li class="main">input "controllé": sans l'attribute "value". Peux avoir l'attribut "defaultValue"</li>
+                            <li class="main">defaultValue est utilisé seulement lors du premier rendu du composant !</li>
+
+                        </ul>
+                        <p><a href="https://facebook.github.io/react/docs/forms.html#controlled-components">https://facebook.github.io/react/docs/forms.html#controlled-components</a></p>
+                    </div>
+                </section>
+
+                <section>
+                    <h3 class="title">2 - React component (5/5)</h3>
+                    <h4>JSX</h4>
+                    <div class="content">
+                        <ul>
+
+                            <li class="main">Sans JSX :
+
+                                <pre>
+                                    <code class="js hljs">
+var child1 = React.createElement('li', null, 'First Text Content');
+var child2 = React.createElement('li', null, 'Second Text Content');
+var root = React.createElement('ul', { className: 'my-list' }, child1, child2);
+ReactDOM.render(root, document.getElementById('example'));
+                                    </code>
+                                </pre>
+                            </li>
+
+                            <li class="main">Avec JX :
+
+                                <pre>
+                                    <code class="js hljs">
+var MyComponent = React.creatClass({/*...*/});
+var myElement = <MyComponent someProperty={true} />;
+ReactDOM.render(myElement, document.getElementById('example'));
+                                </code>
+                            </pre>
+                            </li>
+
+                            <li>Ne pas utiliser class ou for (mots réservés), mais className et htmlFor.</li>
+                        </ul>
+                        <p><a href="https://facebook.github.io/react/docs/displaying-data.html">https://facebook.github.io/react/docs/displaying-data.html</a></p>
+                    </div>
+                </section>
+
+            </section>
+
+            <section>
+                <section>
+                    <h3 class="title">3 - Environnement de dev</h3>
+                    <div class="content">
+                        <ul>
+                            <li class="main">Webpack</li>
+                            <li class="main">Babel</li>
+                            <li class="main">Webpack Dev Server</li>
+                            <li class="main">React hot loader</li>
+                            <li class="main">Tests unitaires Mocha / Karma</li>
+                            <li class="main">TypeScript</li>
+                        </ul>
+                        <p><a href="https://github.com/facebook/react/wiki/Complementary-Tools">https://github.com/facebook/react/wiki/Complementary-Tools</a>
+                    </div>
+                </section>
+            </section>
+
+            <section>
+                <section>
+                    <h3 class="title">4 - Architecture Flux</h3>
+                    <div class="content">
+                        <ul>
+                            <li class="main">Flux de données unidirectionnel</li>
+                            <li class="main">Immutabilité</li>
+                            <li class="main">Redux</li>
+                        </ul>
+
+                    </div>
+                </section>
+                <section>
+                    <h3 class="title">4 - Architecture Flux</h3>
+                    <h4>Flux de données unidirectionnel</h4>
+                    <div class="content">
+                        <ul>
+                            <li class="main">les <strong>actions</strong>, qu'elles proviennent du serveur ou d'une interaction utilisateur ;</li>
+                            <li class="main">le <strong>dispatcher</strong> dans lequel sont envoyées les actions que ce dernier transmet à qui veut, un peu comme un EventEmitter global ;</li>
+                            <li class="main">les <strong>stores</strong>, qui sont l'équivalent du model de l'architecture MVC, ils contiennent les données, et réagissent aux actions que le dispatcher leur transmet ;</li>
+                            <li class="main">les <strong>views</strong>, qui s'occupent du rendu des données dans le DOM, et de lancer des actions lorsque l'utilisateur effectue certaines actions.</li>
+                        </ul>
+                        <p><img src="Flux.png" border=0></p>
+                    </div>
+                </section>
+
+                <section>
+                    <h3 class="title">4 - Architecture Flux</h3>
+                    <h4>Redux : 3 principes</h5>
+                    <div class="content">
+                        <ul>
+                            <li class="main">Single source of truth</li>
+                            <li class="main">State is read-only</li>
+                            <li class="main">Changes are made with pure functions</li>
+                        </ul>
+                        <p><a href="http://redux.js.org/docs/introduction/ThreePrinciples.html">http://redux.js.org/docs/introduction/ThreePrinciples.html</a>
+                    </div>
+                </section>
+
+                <section>
+                    <h3 class="title">4 - Architecture Flux</h3>
+                    <h4>Redux : actions</h4>
+
+                    <div class="content">
+
+
+<pre>
+<code class="js">
+//Action
+{
+    type: ADD_TODO,
+    text: 'Build my first Redux app'
+}
+// Action creator
+function addTodo(text) {
+    return {
+        type: ADD_TODO,
+        text
+    }
+}
+//Dispatcher
+dispatch(addTodo(text))
+</code>
+</pre>
+                    </div>
+                </section>
+
+                <section>
+                    <h3 class="title">4 - Architecture Flux</h3>
+                    <h4>Redux: Reducer</h4>
+
+                    <div class="content">
+<pre>
+<code class="js">
+function todoApp(state = initialState, action) {
+    switch (action.type) {
+        case SET_VISIBILITY_FILTER:
+            return Object.assign({}, state, {
+                visibilityFilter: action.filter
+            })
+        default:
+          return state
+    }
+}
+</code>
+</pre>
+                    </div>
+                </section>
+
+                <section>
+                    <h3 class="title">4 - Architecture Flux</h3>
+                    <h4>Redux : Store</h4>
+                    <div class="content">
+                        <p>Le Store est un objet qui rassemble les actions et les reducers</p>
+
+<pre>
+<code class="js hljs">
+import { createStore } from 'redux'
+import todoReducer from './reducers'
+let store = createStore(todoReducer, initialState)
+</code>
+</pre>
+                        <ul>
+                            <li>store.getState()</li>
+                            <li>store.dispatch(action)</li>
+                            <li>store.subscribe(callback)</li>
+                        </ul>
+                    </div>
+                </section>
+
+            </section>
+
+        </div>
+    </div>
+    <script src="//cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/head.min.js"></script>
+    <script src="//cdn.jsdelivr.net/reveal.js/3.0.0/js/reveal.min.js"></script>
+    <script>
+    Reveal.initialize({
+        dependencies: [{
+            src: '//cdn.jsdelivr.net/reveal.js/3.0.0/plugin/highlight/highlight.js',
+            async: true,
+            callback: function() {
+                hljs.initHighlightingOnLoad();
+            }
+        }]
+    });
+    </script>
+</body>
+
+</html>
